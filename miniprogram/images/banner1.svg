@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="300" viewBox="0 0 750 300">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#FFC107"/>
+    </linearGradient>
+  </defs>
+  <rect width="750" height="300" fill="url(#bg1)" rx="12"/>
+  <text x="375" y="120" font-family="Arial" font-size="42" font-weight="bold" fill="white" text-anchor="middle">新用户专享</text>
+  <text x="375" y="180" font-family="Arial" font-size="30" fill="white" text-anchor="middle" opacity="0.9">首单立减5元 满30再减5</text>
+  <text x="375" y="240" font-family="Arial" font-size="60" fill="white" text-anchor="middle" opacity="0.3">🍜</text>
+</svg>

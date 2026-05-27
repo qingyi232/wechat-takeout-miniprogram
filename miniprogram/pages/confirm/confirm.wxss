@@ -1,0 +1,282 @@
+.container {
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+}
+
+/* 温馨提示 */
+.tip-bar {
+  display: flex;
+  align-items: center;
+  background-color: #F0FFF6;
+  padding: 16rpx 24rpx;
+  margin: 16rpx 24rpx;
+  border-radius: 8rpx;
+}
+
+.tip-icon {
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #2AAE67;
+}
+
+/* 收货地址 */
+.address-card {
+  background-color: #fff;
+  margin: 16rpx 24rpx;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.address-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.address-text {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.address-arrow {
+  font-size: 28rpx;
+  color: #999;
+  margin-left: 16rpx;
+}
+
+.address-contact {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.no-address {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 配送信息 */
+.delivery-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  margin: 0 24rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 12rpx;
+  margin-top: 16rpx;
+}
+
+.delivery-label {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.delivery-time {
+  font-size: 26rpx;
+  color: #2AAE67;
+}
+
+/* 商品列表 */
+.order-goods-card {
+  background-color: #fff;
+  margin: 16rpx 24rpx;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.goods-merchant-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.goods-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.goods-item:last-of-type {
+  border-bottom: none;
+}
+
+.goods-image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 8rpx;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.goods-info {
+  flex: 1;
+}
+
+.goods-name {
+  font-size: 26rpx;
+  color: #333;
+  display: block;
+}
+
+.goods-qty {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.goods-price {
+  font-size: 28rpx;
+  flex-shrink: 0;
+}
+
+.goods-summary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f5f5f5;
+  margin-top: 8rpx;
+}
+
+.discount-text {
+  font-size: 24rpx;
+  color: #FAAD14;
+  margin-right: 16rpx;
+}
+
+.subtotal-label {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.subtotal-price {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #FF5F3E;
+}
+
+/* 配送费卡片 */
+.fee-card {
+  background-color: #fff;
+  margin: 16rpx 24rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 12rpx;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fee-label {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.fee-value {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.fee-free {
+  color: #2AAE67;
+}
+
+/* 商家承诺 */
+.promise-card {
+  background-color: #fff;
+  margin: 16rpx 24rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 12rpx;
+}
+
+.promise-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.promise-item:last-child {
+  border-bottom: none;
+}
+
+.promise-label {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.promise-value {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.remark-text {
+  color: #999;
+}
+
+/* 底部提交栏 */
+.submit-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.08);
+}
+
+.submit-price-info {
+  display: flex;
+  align-items: baseline;
+}
+
+.submit-discount {
+  font-size: 24rpx;
+  color: #FAAD14;
+  margin-right: 16rpx;
+}
+
+.submit-label {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.submit-total {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #FF5F3E;
+}
+
+.submit-btn {
+  background-color: #2AAE67;
+  color: #333;
+  padding: 16rpx 48rpx;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}

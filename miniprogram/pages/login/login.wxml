@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="login-header">
+    <text class="login-logo">🍽️</text>
+    <text class="login-title">食刻</text>
+    <text class="login-subtitle">美味，触手可及</text>
+  </view>
+
+  <view class="login-form">
+    <view class="form-item">
+      <text class="form-label">昵称</text>
+      <input class="form-input" placeholder="请输入昵称" value="{{nickName}}" bindinput="onNickNameInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">头像</text>
+      <view class="avatar-picker" bindtap="chooseAvatar">
+        <image wx:if="{{avatarUrl}}" class="avatar-preview" src="{{avatarUrl}}" mode="aspectFill"></image>
+        <text wx:else class="avatar-placeholder">点击选择头像</text>
+      </view>
+    </view>
+  </view>
+
+  <button class="login-btn" bindtap="login">微信登录</button>
+
+  <view class="login-tip">
+    <text>登录即表示同意</text>
+    <text class="link" bindtap="goAgreement">《用户协议》</text>
+  </view>
+</view>

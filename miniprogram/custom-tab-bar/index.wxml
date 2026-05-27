@@ -1,0 +1,32 @@
+<view class="tab-bar">
+  <view class="tab-bar-border"></view>
+  <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+    <!-- 首页图标 -->
+    <view wx:if="{{item.iconType === 'home'}}" class="tab-icon">
+      <view class="icon-home {{selected === index ? 'active' : ''}}">
+        <view class="home-roof"></view>
+        <view class="home-body">
+          <view class="home-door"></view>
+        </view>
+      </view>
+    </view>
+    <!-- 订单图标 -->
+    <view wx:elif="{{item.iconType === 'order'}}" class="tab-icon">
+      <view class="icon-order {{selected === index ? 'active' : ''}}">
+        <view class="order-body">
+          <view class="order-line"></view>
+          <view class="order-line"></view>
+          <view class="order-line short"></view>
+        </view>
+      </view>
+    </view>
+    <!-- 我的图标 -->
+    <view wx:elif="{{item.iconType === 'mine'}}" class="tab-icon">
+      <view class="icon-mine {{selected === index ? 'active' : ''}}">
+        <view class="mine-head"></view>
+        <view class="mine-body"></view>
+      </view>
+    </view>
+    <view class="tab-bar-text" style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
+  </view>
+</view>

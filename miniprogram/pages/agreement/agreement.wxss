@@ -1,0 +1,44 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 24rpx;
+}
+
+.content-card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 32rpx;
+}
+
+.title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  text-align: center;
+  margin-bottom: 12rpx;
+}
+
+.update-time {
+  font-size: 22rpx;
+  color: #999;
+  display: block;
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-top: 24rpx;
+  margin-bottom: 12rpx;
+}
+
+.section-content {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.8;
+  display: block;
+}

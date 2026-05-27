@@ -1,0 +1,85 @@
+<view class="container">
+  <!-- 温馨提示 -->
+  <view class="tip-bar">
+    <text class="tip-icon">📢</text>
+    <text class="tip-text">温馨提示: 请适量点餐, 避免浪费</text>
+  </view>
+
+  <!-- 收货地址 -->
+  <view class="address-card" bindtap="chooseAddress">
+    <view wx:if="{{address}}">
+      <view class="address-main">
+        <text class="address-text">{{address.address}}</text>
+        <text class="address-arrow">></text>
+      </view>
+      <view class="address-contact">
+        <text>{{address.name}}  {{address.phone}}</text>
+      </view>
+    </view>
+    <view wx:else class="no-address">
+      <text>请选择收货地址</text>
+      <text class="address-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 配送信息 -->
+  <view class="delivery-info">
+    <text class="delivery-label">平台配送</text>
+    <text class="delivery-time">预计{{merchant.deliveryTime}}分钟内送达</text>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="order-goods-card">
+    <text class="goods-merchant-name">{{merchant.name}}</text>
+    <view class="goods-item" wx:for="{{cartItems}}" wx:key="id">
+      <image class="goods-image" src="{{item.image}}" mode="aspectFill"></image>
+      <view class="goods-info">
+        <text class="goods-name">{{item.name}}</text>
+        <text class="goods-qty">x {{item.quantity}}</text>
+      </view>
+      <text class="goods-price price">¥{{item.currentPrice}}</text>
+    </view>
+    <view class="goods-summary">
+      <text class="discount-text" wx:if="{{discount > 0}}">已优惠 ¥{{discount}}</text>
+      <text class="subtotal-label">商品小计 ¥</text>
+      <text class="subtotal-price">{{totalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- 配送费 -->
+  <view class="fee-card">
+    <view class="fee-row">
+      <text class="fee-label">配送费</text>
+      <text class="fee-value" wx:if="{{deliveryFee > 0}}">¥{{deliveryFee}}</text>
+      <text class="fee-value fee-free" wx:else>免配送费</text>
+    </view>
+  </view>
+
+  <!-- 商家承诺 -->
+  <view class="promise-card">
+    <view class="promise-item">
+      <text class="promise-label">商家承诺</text>
+      <text class="promise-value">售后无忧·食无忧</text>
+    </view>
+    <view class="promise-item">
+      <text class="promise-label">隐私保护</text>
+      <text class="promise-value">号码保护·隐私无忧</text>
+    </view>
+    <view class="promise-item" bindtap="editRemark">
+      <text class="promise-label">备注</text>
+      <text class="promise-value remark-text">{{remark || '填写口味偏好 >'}}</text>
+    </view>
+  </view>
+
+  <!-- 底部提交栏 -->
+  <view class="submit-bar">
+    <view class="submit-price-info">
+      <text class="submit-discount" wx:if="{{discount > 0}}">已优惠 ¥{{discount}}</text>
+      <text class="submit-label">合计 ¥</text>
+      <text class="submit-total">{{payAmount}}</text>
+    </view>
+    <view class="submit-btn" bindtap="submitOrder">
+      <text>提交订单</text>
+    </view>
+  </view>
+</view>

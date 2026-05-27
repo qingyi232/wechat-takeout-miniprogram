@@ -1,0 +1,112 @@
+<view class="container">
+  <!-- 已有申请记录 -->
+  <view wx:if="{{hasApply}}" class="apply-result">
+    <!-- 审核中 -->
+    <view wx:if="{{apply.status === 0}}" class="result-card pending">
+      <view class="result-icon">⏳</view>
+      <view class="result-title">申请审核中</view>
+      <view class="result-desc">您的入驻申请正在审核，请耐心等待</view>
+      <view class="apply-info">
+        <view class="info-row"><text class="info-label">商家名称</text><text class="info-value">{{apply.name}}</text></view>
+        <view class="info-row"><text class="info-label">联系电话</text><text class="info-value">{{apply.phone}}</text></view>
+        <view class="info-row"><text class="info-label">经营类型</text><text class="info-value">{{apply.categoryType}}</text></view>
+        <view class="info-row"><text class="info-label">申请时间</text><text class="info-value">{{apply.createTime}}</text></view>
+      </view>
+    </view>
+
+    <!-- 审核通过 -->
+    <view wx:if="{{apply.status === 1}}" class="result-card success">
+      <view class="result-icon">✅</view>
+      <view class="result-title">入驻成功</view>
+      <view class="result-desc">恭喜！您的商家已通过审核，请使用以下账号登录商家管理后台</view>
+      <view class="account-card">
+        <view class="account-row">
+          <text class="account-label">商家账号</text>
+          <text class="account-value">{{apply.merchantAccount}}</text>
+        </view>
+        <view class="account-row">
+          <text class="account-label">初始密码</text>
+          <text class="account-value">{{apply.merchantPassword}}</text>
+        </view>
+        <view class="account-tip">请妥善保管账号密码，登录后请及时修改密码</view>
+      </view>
+      <view class="copy-btn" bindtap="copyAccount">
+        <text>复制账号密码</text>
+      </view>
+    </view>
+
+    <!-- 审核拒绝 -->
+    <view wx:if="{{apply.status === 2}}" class="result-card rejected">
+      <view class="result-icon">❌</view>
+      <view class="result-title">申请被拒绝</view>
+      <view class="result-desc">拒绝原因：{{apply.rejectReason || '不符合入驻条件'}}</view>
+      <view class="reapply-btn" bindtap="reApply">
+        <text>重新申请</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 申请表单 -->
+  <view wx:else class="apply-form">
+    <view class="form-header">
+      <view class="form-title">商家入驻申请</view>
+      <view class="form-subtitle">填写商家信息，提交审核后即可入驻食刻外卖平台</view>
+    </view>
+
+    <view class="form-card">
+      <view class="form-group">
+        <text class="form-label">商家名称 <text class="required">*</text></text>
+        <input class="form-input" placeholder="请输入商家名称" value="{{form.name}}" bindinput="onInputChange" data-field="name" />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">联系电话 <text class="required">*</text></text>
+        <input class="form-input" placeholder="请输入联系电话" type="number" value="{{form.phone}}" bindinput="onInputChange" data-field="phone" />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">商家地址 <text class="required">*</text></text>
+        <view class="form-select" bindtap="chooseLocation">
+          <text class="{{form.address ? '' : 'placeholder'}}">{{form.address || '点击选择商家位置'}}</text>
+          <text class="select-arrow">📍</text>
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">经营类型 <text class="required">*</text></text>
+        <view class="form-select" bindtap="showCategorySelect">
+          <text class="{{form.categoryType ? '' : 'placeholder'}}">{{form.categoryType || '请选择经营类型'}}</text>
+          <text class="select-arrow">▾</text>
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">商家简介</text>
+        <textarea class="form-textarea" placeholder="请简要描述您的商家特色" value="{{form.description}}" bindinput="onInputChange" data-field="description" maxlength="200" />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">营业时间</text>
+        <input class="form-input" placeholder="如 08:00-22:00" value="{{form.businessHours}}" bindinput="onInputChange" data-field="businessHours" />
+      </view>
+    </view>
+
+    <view class="submit-btn {{submitting ? 'disabled' : ''}}" bindtap="submitApply">
+      <text>{{submitting ? '提交中...' : '提交入驻申请'}}</text>
+    </view>
+  </view>
+
+  <!-- 经营类型选择弹窗 -->
+  <view class="picker-mask" wx:if="{{showCategoryPicker}}" bindtap="hideCategoryPicker"></view>
+  <view class="picker-popup {{showCategoryPicker ? 'show' : ''}}">
+    <view class="picker-header">
+      <text>选择经营类型</text>
+      <view class="picker-close" bindtap="hideCategoryPicker">✕</view>
+    </view>
+    <view class="picker-options">
+      <view class="picker-option {{form.categoryType === item ? 'active' : ''}}" wx:for="{{categoryOptions}}" wx:key="index" bindtap="selectCategory" data-cat="{{item}}">
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+</view>

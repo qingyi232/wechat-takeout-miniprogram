@@ -1,0 +1,22 @@
+<view class="container">
+  <view wx:if="{{favorites.length === 0}}" class="empty-tip">
+    <text class="empty-icon">⭐</text>
+    <text>暂无收藏商家</text>
+  </view>
+
+  <view class="merchant-list">
+    <view class="merchant-card" wx:for="{{favorites}}" wx:key="id">
+      <view class="merchant-content" bindtap="goShop" data-id="{{item.id}}">
+        <image class="merchant-logo" src="{{item.logo}}" mode="aspectFill"></image>
+        <view class="merchant-info">
+          <text class="merchant-name">{{item.name}}</text>
+          <text class="merchant-rating">{{item.rating}}分</text>
+          <text class="merchant-desc">{{item.description}}</text>
+        </view>
+      </view>
+      <view class="remove-btn" catchtap="removeFavorite" data-id="{{item.id}}">
+        <text>取消收藏</text>
+      </view>
+    </view>
+  </view>
+</view>

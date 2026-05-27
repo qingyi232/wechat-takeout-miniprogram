@@ -1,0 +1,70 @@
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-header">
+    <view class="user-info" bindtap="goLogin">
+      <image class="user-avatar" wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view class="user-avatar default-avatar" wx:else>
+        <text class="default-avatar-icon">👤</text>
+      </view>
+      <view class="user-text">
+        <text class="user-name">{{isLogin ? userInfo.nickName : '点击登录'}}</text>
+        <text class="user-account" wx:if="{{isLogin}}">{{userInfo.nickName}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的功能 -->
+  <view class="function-card">
+    <text class="function-title">我的功能</text>
+    <view class="function-grid">
+      <view class="function-item" bindtap="goAddress">
+        <text class="function-icon">📍</text>
+        <text class="function-name">收货地址</text>
+      </view>
+      <view class="function-item" bindtap="goFavorites">
+        <text class="function-icon">⭐</text>
+        <text class="function-name">我的收藏</text>
+      </view>
+      <view class="function-item" bindtap="goCommentCenter">
+        <text class="function-icon">💬</text>
+        <text class="function-name">评价中心</text>
+      </view>
+      <view class="function-item" bindtap="goHistory">
+        <text class="function-icon">🕐</text>
+        <text class="function-name">浏览历史</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置列表 -->
+  <view class="settings-card">
+    <view class="settings-item" bindtap="goMerchantApply">
+      <text class="settings-icon">🏪</text>
+      <text class="settings-label">商家入驻</text>
+      <text class="settings-arrow">></text>
+    </view>
+    <view class="settings-item" bindtap="goPersonalInfo">
+      <text class="settings-icon">👤</text>
+      <text class="settings-label">个人信息</text>
+      <text class="settings-arrow">></text>
+    </view>
+    <view class="settings-item" bindtap="goAbout">
+      <text class="settings-icon">ℹ️</text>
+      <text class="settings-label">关于我们</text>
+      <text class="settings-arrow">></text>
+    </view>
+    <view class="settings-item" bindtap="goAgreement">
+      <text class="settings-icon">📄</text>
+      <text class="settings-label">用户协议</text>
+      <text class="settings-arrow">></text>
+    </view>
+    <view class="settings-item" bindtap="logout" wx:if="{{isLogin}}">
+      <text class="settings-icon">🚪</text>
+      <text class="settings-label">退出登录</text>
+      <text class="settings-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view style="height: 120rpx;"></view>
+</view>

@@ -1,0 +1,156 @@
+/* 全局样式 */
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  font-size: 28rpx;
+  color: #2D3436;
+  background-color: #F5F7FA;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, image, navigator, scroll-view, swiper, swiper-item, input, textarea, button {
+  box-sizing: border-box;
+}
+
+/* 主题色变量 — 清新翡翠绿 */
+page {
+  --primary-color: #2AAE67;
+  --primary-dark: #1F9456;
+  --primary-light: #F0FFF6;
+  --price-color: #FF5F3E;
+  --text-primary: #2D3436;
+  --text-secondary: #636E72;
+  --text-light: #A0A8B0;
+  --bg-color: #F5F7FA;
+  --white: #ffffff;
+  --border-color: #EBEEF5;
+  --success-color: #52C41A;
+  --danger-color: #FF4D4F;
+  --warning-color: #FAAD14;
+}
+
+/* 通用类 */
+.container {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F5F7FA;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price {
+  color: #FF5F3E;
+  font-weight: bold;
+}
+
+.price-symbol {
+  font-size: 22rpx;
+  color: #FF5F3E;
+  font-weight: bold;
+}
+
+.original-price {
+  color: #A0A8B0;
+  font-size: 24rpx;
+  text-decoration: line-through;
+  margin-left: 8rpx;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2rpx 10rpx;
+  font-size: 20rpx;
+  border-radius: 6rpx;
+}
+
+.tag-discount {
+  color: #FF5F3E;
+  border: 1rpx solid #FF5F3E;
+  background-color: #FFF5F2;
+}
+
+.tag-price {
+  color: #fff;
+  background-color: #FF5F3E;
+  font-size: 18rpx;
+}
+
+.tag-free {
+  color: #2AAE67;
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.divider {
+  width: 100%;
+  height: 1rpx;
+  background-color: #EBEEF5;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  margin: 16rpx 24rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2AAE67 0%, #20C374 100%);
+  color: #fff;
+  border: none;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  padding: 16rpx 48rpx;
+  text-align: center;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+}

@@ -1,0 +1,84 @@
+<view class="container">
+  <!-- 定位栏 -->
+  <view class="location-bar">
+    <view class="location-info" bindtap="relocate">
+      <text class="loc-icon">📍</text>
+      <text class="loc-text">{{locationName}}</text>
+      <text class="loc-arrow">▾</text>
+    </view>
+    <view class="search-entry" bindtap="goSearch">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">搜索商家</text>
+    </view>
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper class="banner-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000" duration="500" circular="{{true}}" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#2AAE67">
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image class="banner-image" src="{{item.image}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 公告 -->
+  <view class="announcement-bar" wx:if="{{announcements.length > 0}}">
+    <text class="announcement-icon">📢</text>
+    <swiper class="announcement-swiper" vertical="{{true}}" autoplay="{{true}}" interval="3000" circular="{{true}}">
+      <swiper-item wx:for="{{announcements}}" wx:key="index">
+        <text class="announcement-text">{{item}}</text>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 分类入口 -->
+  <view class="category-section">
+    <view class="category-grid">
+      <view class="category-item" wx:for="{{categories}}" wx:key="id" bindtap="goCategory" data-name="{{item.name}}">
+        <view class="category-icon-wrapper">
+          <text class="category-icon">{{item.icon}}</text>
+        </view>
+        <text class="category-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 排序筛选栏 -->
+  <view class="sort-filter-bar">
+    <view class="sort-tabs">
+      <view class="sort-tab {{currentSort === item.key ? 'active' : ''}}" wx:for="{{sortOptions}}" wx:key="key" bindtap="selectSort" data-key="{{item.key}}">
+        <text>{{item.label}}</text>
+      </view>
+      <view class="sort-tab {{currentSort === 'distance' ? 'active' : ''}}" bindtap="selectSort" data-key="distance" wx:if="{{hasLocation}}">
+        <text>距离最近</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商家列表 -->
+  <view class="merchant-list">
+    <view class="merchant-card" wx:for="{{merchants}}" wx:key="id" bindtap="goShop" data-id="{{item.id}}">
+      <image class="merchant-logo" src="{{item.logo}}" mode="aspectFill"></image>
+      <view class="merchant-info">
+        <view class="merchant-name-row">
+          <text class="merchant-name">{{item.name}}</text>
+        </view>
+        <view class="merchant-meta">
+          <text class="merchant-rating">⭐ {{item.rating}}分</text>
+          <text class="merchant-sales">月售{{item.monthlySales}}</text>
+          <text class="merchant-time">{{item.deliveryTime}}分钟</text>
+          <text class="merchant-distance" wx:if="{{item.distance !== null}}">{{item.distance}}km</text>
+        </view>
+        <view class="merchant-tags">
+          <text wx:if="{{item.freeDelivery}}" class="tag-free">免配送费</text>
+          <text wx:else class="tag-fee">配送费¥{{item.deliveryFee}}</text>
+          <text wx:if="{{item.deliveryRange}}" class="tag-range">配送{{item.deliveryRange}}km</text>
+        </view>
+        <view class="merchant-desc">
+          <text>{{item.description}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view style="height: 120rpx;"></view>
+</view>

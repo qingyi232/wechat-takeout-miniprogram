@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="form-card">
+    <view class="form-item">
+      <text class="form-label">联系人</text>
+      <input class="form-input" placeholder="请输入联系人姓名" value="{{name}}" bindinput="onNameInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input class="form-input" placeholder="请输入手机号" value="{{phone}}" bindinput="onPhoneInput" type="number" maxlength="11" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">详细地址</text>
+      <view class="address-pick" bindtap="chooseLocation">
+        <text class="{{address ? 'address-picked' : 'address-placeholder'}}">{{address || '点击选择收货位置'}}</text>
+        <text class="loc-icon">📍</text>
+      </view>
+    </view>
+    <view class="form-item switch-item">
+      <text class="form-label">设为默认地址</text>
+      <switch checked="{{isDefault}}" bindchange="onDefaultChange" color="#2AAE67" />
+    </view>
+  </view>
+
+  <view class="save-btn" bindtap="saveAddress">
+    <text>保存地址</text>
+  </view>
+</view>

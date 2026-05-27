@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="comment-card">
+    <text class="card-title">请对本次订单进行评价</text>
+
+    <!-- 评分 -->
+    <view class="rating-section">
+      <text class="rating-label">整体评分</text>
+      <view class="stars">
+        <text class="star {{index < rating ? 'active' : ''}}" wx:for="{{5}}" wx:key="index" bindtap="setRating" data-rating="{{index + 1}}">★</text>
+      </view>
+    </view>
+
+    <!-- 评价标签 -->
+    <view class="tag-section">
+      <view class="comment-tag {{item.selected ? 'selected' : ''}}" wx:for="{{tags}}" wx:key="index" bindtap="toggleTag" data-index="{{index}}">
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+
+    <!-- 评价内容 -->
+    <view class="textarea-section">
+      <textarea class="comment-textarea" placeholder="请输入您的评价内容..." value="{{content}}" bindinput="onContentInput" maxlength="200"></textarea>
+      <text class="char-count">{{content.length}}/200</text>
+    </view>
+  </view>
+
+  <view class="submit-btn" bindtap="submitComment">
+    <text>提交评价</text>
+  </view>
+</view>

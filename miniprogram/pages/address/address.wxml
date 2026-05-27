@@ -1,0 +1,33 @@
+<view class="container">
+  <view wx:if="{{addressList.length === 0}}" class="empty-tip">
+    <text>暂无收货地址</text>
+  </view>
+
+  <view class="address-list">
+    <view class="address-item" wx:for="{{addressList}}" wx:key="id" bindtap="selectAddress" data-index="{{index}}">
+      <view class="address-info">
+        <view class="address-main">
+          <text class="address-text">{{item.address}}</text>
+          <text class="default-tag" wx:if="{{item.isDefault}}">默认</text>
+        </view>
+        <view class="address-contact">
+          <text>{{item.name}}  {{item.phone}}</text>
+        </view>
+      </view>
+      <view class="address-actions">
+        <view class="action-edit" catchtap="editAddress" data-index="{{index}}">
+          <text>编辑</text>
+        </view>
+        <view class="action-delete" catchtap="deleteAddress" data-index="{{index}}">
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="add-btn-wrapper">
+    <view class="add-btn" bindtap="addAddress">
+      <text>+ 新增收货地址</text>
+    </view>
+  </view>
+</view>

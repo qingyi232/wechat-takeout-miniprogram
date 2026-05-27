@@ -1,0 +1,76 @@
+<view class="container">
+  <!-- 状态标签 -->
+  <view class="status-tabs">
+    <view class="status-tab {{currentStatus === 'all' ? 'active' : ''}}" bindtap="switchStatus" data-status="all">
+      <text>全部</text>
+      <view class="tab-line" wx:if="{{currentStatus === 'all'}}"></view>
+    </view>
+    <view class="status-tab {{currentStatus === 'ongoing' ? 'active' : ''}}" bindtap="switchStatus" data-status="ongoing">
+      <text>进行中</text>
+      <view class="tab-line" wx:if="{{currentStatus === 'ongoing'}}"></view>
+    </view>
+    <view class="status-tab {{currentStatus === 'to_comment' ? 'active' : ''}}" bindtap="switchStatus" data-status="to_comment">
+      <text>待评价</text>
+      <view class="tab-line" wx:if="{{currentStatus === 'to_comment'}}"></view>
+    </view>
+    <view class="status-tab {{currentStatus === 'refunded' ? 'active' : ''}}" bindtap="switchStatus" data-status="refunded">
+      <text>已退款</text>
+      <view class="tab-line" wx:if="{{currentStatus === 'refunded'}}"></view>
+    </view>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class="order-list">
+    <view wx:if="{{filteredOrders.length === 0}}" class="empty-tip">
+      <text>暂无订单</text>
+    </view>
+    <view class="order-card" wx:for="{{filteredOrders}}" wx:key="id">
+      <!-- 订单头部 -->
+      <view class="order-header" bindtap="goOrderDetail" data-id="{{item.id}}">
+        <text class="order-merchant-name">{{item.merchantName}} ></text>
+        <text class="order-status {{item.status}}">{{item.statusText}}</text>
+      </view>
+
+      <!-- 订单内容 -->
+      <view class="order-content" bindtap="goOrderDetail" data-id="{{item.id}}">
+        <image class="order-image" src="{{item.firstItemImage}}" mode="aspectFill"></image>
+        <view class="order-info">
+          <text class="order-desc">{{item.itemsDesc}}</text>
+          <view class="order-price-row">
+            <text class="order-price-label">实付 ¥</text>
+            <text class="order-price">{{item.totalPrice}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 订单操作 -->
+      <view class="order-actions">
+        <view class="order-action-left">
+          <view wx:if="{{item.status === 'refunded' || item.status === 'completed' || item.status === 'cancelled'}}" class="action-btn delete" bindtap="deleteOrder" data-id="{{item.id}}">
+            <text>🗑 删除</text>
+          </view>
+        </view>
+        <view class="order-action-right">
+          <view wx:if="{{item.status === 'pending_pay'}}" class="action-btn pay" bindtap="payOrder" data-id="{{item.id}}">
+            <text>支付</text>
+          </view>
+          <view wx:if="{{item.status === 'pending_pay'}}" class="action-btn cancel" bindtap="cancelOrder" data-id="{{item.id}}">
+            <text>取消</text>
+          </view>
+          <view wx:if="{{item.status === 'pending_accept' || item.status === 'delivering'}}" class="action-btn refund" bindtap="refundOrder" data-id="{{item.id}}">
+            <text>退款</text>
+          </view>
+          <view wx:if="{{item.status === 'delivering'}}" class="action-btn confirm" bindtap="confirmReceive" data-id="{{item.id}}">
+            <text>确认收货</text>
+          </view>
+          <view wx:if="{{item.status === 'completed' && !item.commented}}" class="action-btn comment" bindtap="goComment" data-id="{{item.id}}" data-merchant-id="{{item.merchantId}}">
+            <text>评价</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view style="height: 120rpx;"></view>
+</view>

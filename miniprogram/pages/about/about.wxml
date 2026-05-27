@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="logo-section">
+    <text class="app-logo">🍽️</text>
+    <text class="app-name">食刻</text>
+    <text class="app-version">版本 1.0.0</text>
+  </view>
+
+  <view class="info-card">
+    <view class="info-item">
+      <text class="info-label">应用名称</text>
+      <text class="info-value">食刻</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">应用描述</text>
+      <text class="info-value">面向中小餐饮商家的轻量级外卖系统</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">开发者</text>
+      <text class="info-value">董呈旭</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">所属院校</text>
+      <text class="info-value">河北环境工程学院</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">专业班级</text>
+      <text class="info-value">软件工程B223</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">指导教师</text>
+      <text class="info-value">李淑芳 教授</text>
+    </view>
+  </view>
+
+  <view class="desc-card">
+    <text class="desc-title">项目简介</text>
+    <text class="desc-content">本系统是适用于中小餐饮商家的外卖系统，专注于线上点餐、订单管理、菜品管理、基础信息维护及运营数据统计分析的一体化便捷管理，核心目标是提升餐饮商家线上服务能力、降低第三方平台依赖、节约管理资源。</text>
+  </view>
+</view>

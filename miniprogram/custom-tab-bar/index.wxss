@@ -1,0 +1,167 @@
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6rpx 0;
+  padding-bottom: calc(6rpx + env(safe-area-inset-bottom));
+  z-index: 999;
+  box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+
+.tab-bar-border {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  background-color: transparent;
+}
+
+.tab-bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rpx 0;
+}
+
+.tab-icon {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rpx;
+}
+
+.tab-bar-text {
+  font-size: 22rpx;
+  line-height: 1;
+}
+
+/* 首页图标 */
+.icon-home {
+  width: 44rpx;
+  height: 44rpx;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-roof {
+  width: 0;
+  height: 0;
+  border-left: 22rpx solid transparent;
+  border-right: 22rpx solid transparent;
+  border-bottom: 16rpx solid #999;
+}
+
+.icon-home.active .home-roof {
+  border-bottom-color: #2AAE67;
+}
+
+.home-body {
+  width: 32rpx;
+  height: 22rpx;
+  border: 3rpx solid #999;
+  border-top: none;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.icon-home.active .home-body {
+  border-color: #2AAE67;
+}
+
+.home-door {
+  width: 10rpx;
+  height: 12rpx;
+  border: 2rpx solid #999;
+  border-bottom: none;
+}
+
+.icon-home.active .home-door {
+  border-color: #2AAE67;
+}
+
+/* 订单图标 */
+.icon-order {
+  width: 36rpx;
+  height: 44rpx;
+  position: relative;
+}
+
+.order-body {
+  width: 100%;
+  height: 100%;
+  border: 3rpx solid #999;
+  border-radius: 4rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6rpx 4rpx;
+}
+
+.icon-order.active .order-body {
+  border-color: #2AAE67;
+}
+
+.order-line {
+  width: 80%;
+  height: 3rpx;
+  background-color: #999;
+  margin: 3rpx 0;
+}
+
+.order-line.short {
+  width: 55%;
+  align-self: flex-start;
+  margin-left: 10%;
+}
+
+.icon-order.active .order-line {
+  background-color: #2AAE67;
+}
+
+/* 我的图标 */
+.icon-mine {
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mine-head {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  border: 3rpx solid #999;
+}
+
+.icon-mine.active .mine-head {
+  border-color: #2AAE67;
+}
+
+.mine-body {
+  width: 32rpx;
+  height: 16rpx;
+  border: 3rpx solid #999;
+  border-bottom: none;
+  border-radius: 16rpx 16rpx 0 0;
+  margin-top: 4rpx;
+}
+
+.icon-mine.active .mine-body {
+  border-color: #2AAE67;
+}

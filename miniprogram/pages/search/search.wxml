@@ -1,0 +1,43 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索商家或菜品" value="{{keyword}}" bindinput="onInput" bindconfirm="doSearch" focus="{{true}}" />
+      <text class="search-clear" wx:if="{{keyword}}" bindtap="clearKeyword">✕</text>
+    </view>
+    <text class="search-btn" bindtap="doSearch">搜索</text>
+  </view>
+
+  <!-- 分类筛选 -->
+  <view class="category-filter" wx:if="{{!keyword && !hasSearched}}">
+    <text class="filter-title">热门分类</text>
+    <view class="filter-tags">
+      <view class="filter-tag" wx:for="{{categories}}" wx:key="id" bindtap="searchByCategory" data-name="{{item.name}}">
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view class="search-results" wx:if="{{hasSearched}}">
+    <view wx:if="{{results.length === 0}}" class="empty-tip">
+      <text>未找到相关商家</text>
+    </view>
+    <view class="merchant-card" wx:for="{{results}}" wx:key="id" bindtap="goShop" data-id="{{item.id}}">
+      <image class="merchant-logo" src="{{item.logo}}" mode="aspectFill"></image>
+      <view class="merchant-info">
+        <text class="merchant-name">{{item.name}}</text>
+        <view class="merchant-meta">
+          <text class="merchant-rating">{{item.rating}}分</text>
+          <text class="merchant-sales">月售{{item.monthlySales}}</text>
+          <text class="merchant-time">{{item.deliveryTime}}分钟</text>
+        </view>
+        <view class="merchant-tags">
+          <text wx:if="{{item.freeDelivery}}" class="tag-free">免配送费</text>
+        </view>
+        <text class="merchant-desc">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+</view>

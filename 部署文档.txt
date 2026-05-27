@@ -1,0 +1,558 @@
+================================================================================
+             食刻外卖 - 项目部署文档（极详细版）
+================================================================================
+
+
+================================================================================
+第一部分：环境准备（安装所需软件）
+================================================================================
+
+在开始之前，你需要在电脑上安装以下软件。如果已经安装过，可以跳过对应步骤。
+
+------------------------------------------------------------------------
+1.1 安装 JDK（Java 开发工具包）
+------------------------------------------------------------------------
+
+本项目后端使用 Java 编写，需要 JDK 11 或更高版本（推荐 JDK 17）。
+
+下载地址：
+  - Oracle JDK: https://www.oracle.com/java/technologies/downloads/
+  - 或使用免费的 Adoptium: https://adoptium.net/
+
+安装步骤：
+  (1) 下载对应操作系统的 JDK 安装包（Windows 选 .msi 或 .exe）
+  (2) 双击安装包，一路点"下一步"即可完成安装
+  (3) 配置环境变量（非常重要！）：
+      a. 右键"此电脑" -> "属性" -> "高级系统设置" -> "环境变量"
+      b. 在"系统变量"中点击"新建"：
+         变量名：JAVA_HOME
+         变量值：C:\Program Files\Java\jdk-17（改成你的实际安装路径）
+      c. 找到"系统变量"中的 Path，双击打开，点击"新建"，添加：
+         %JAVA_HOME%\bin
+      d. 点击"确定"保存所有设置
+  (4) 验证安装：打开命令提示符（Win+R 输入 cmd），输入：
+      java -version
+      看到版本号信息就说明安装成功。
+
+------------------------------------------------------------------------
+1.2 安装 Maven（Java 项目构建工具）
+------------------------------------------------------------------------
+
+Maven 用来管理 Java 项目的依赖和编译。
+
+下载地址：https://maven.apache.org/download.cgi
+  - 下载 "Binary zip archive"，例如 apache-maven-3.9.6-bin.zip
+
+安装步骤：
+  (1) 将下载的 zip 文件解压到一个目录，例如：C:\apache-maven-3.9.6
+  (2) 配置环境变量：
+      a. 新建系统变量：
+         变量名：MAVEN_HOME
+         变量值：C:\apache-maven-3.9.6
+      b. 编辑 Path 变量，添加：
+         %MAVEN_HOME%\bin
+  (3) 验证安装：打开新的命令提示符，输入：
+      mvn -version
+      看到 Maven 版本信息说明安装成功。
+
+  如果下载依赖速度慢，建议配置国内镜像。编辑 C:\apache-maven-3.9.6\conf\settings.xml，
+  在 <mirrors> 标签内添加：
+
+    <mirror>
+      <id>aliyun</id>
+      <mirrorOf>central</mirrorOf>
+      <name>阿里云Maven镜像</name>
+      <url>https://maven.aliyun.com/repository/central</url>
+    </mirror>
+
+------------------------------------------------------------------------
+1.3 安装 MySQL 数据库
+------------------------------------------------------------------------
+
+本项目使用 MySQL 8.0 数据库。
+
+下载地址：https://dev.mysql.com/downloads/installer/
+  - 选择 "MySQL Installer for Windows"
+
+安装步骤：
+  (1) 下载安装包后双击运行
+  (2) 选择 "Server only"（只安装数据库服务器就够了）
+  (3) 安装过程中会让你设置 root 密码，请设置为：root
+      （如果你设置了其他密码，后续需要修改配置文件）
+  (4) 其他选项保持默认即可，点"Next"直到完成
+  (5) 验证安装：打开命令提示符，输入：
+      mysql -u root -proot
+      如果成功进入 MySQL 命令行（显示 mysql>），说明安装成功。
+      输入 exit 退出。
+
+  注意：如果提示 "mysql 不是内部或外部命令"，需要将 MySQL 的 bin 目录
+  添加到系统 Path 环境变量中。MySQL 默认安装路径通常为：
+  C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+------------------------------------------------------------------------
+1.4 安装 Node.js（前端开发运行环境）
+------------------------------------------------------------------------
+
+管理后台前端使用 Vue3 开发，需要 Node.js 环境。
+
+下载地址：https://nodejs.org/
+  - 推荐下载 LTS（长期支持版），例如 18.x 或 20.x
+
+安装步骤：
+  (1) 下载 .msi 安装包，双击运行
+  (2) 一路点"Next"完成安装（安装时勾选"Add to PATH"）
+  (3) 验证安装：打开命令提示符，输入：
+      node -v     （显示版本号，如 v18.17.0）
+      npm -v      （显示版本号，如 9.6.7）
+
+  配置国内镜像加速（推荐）：
+      npm config set registry https://registry.npmmirror.com
+
+------------------------------------------------------------------------
+1.5 安装微信开发者工具
+------------------------------------------------------------------------
+
+小程序需要在微信开发者工具中运行和调试。
+
+下载地址：https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
+  - 选择"稳定版 Windows 64"
+
+安装步骤：
+  (1) 下载安装包，双击运行
+  (2) 按照提示完成安装
+  (3) 打开微信开发者工具，使用微信扫码登录
+
+
+================================================================================
+第二部分：获取项目源码
+================================================================================
+
+将整个"外卖小程序"文件夹复制到你的电脑上即可。
+
+项目目录结构如下：
+
+  外卖小程序/
+  ├── backend/          ← 后端 Spring Boot 项目
+  │   ├── pom.xml       ← Maven 配置文件
+  │   ├── sql/          ← 数据库脚本
+  │   │   ├── init.sql        ← 数据库初始化（表结构+初始数据）
+  │   │   └── sample_data.sql ← 示例数据（可选）
+  │   └── src/          ← Java 源代码
+  │
+  ├── admin/            ← 管理后台前端（Vue3）
+  │   ├── package.json  ← 依赖配置
+  │   └── src/          ← 前端源代码
+  │
+  ├── miniprogram/      ← 微信小程序
+  │   ├── app.json      ← 小程序配置
+  │   ├── app.js        ← 小程序入口
+  │   └── pages/        ← 小程序页面
+  │
+  └── 需求文档           ← 项目需求说明
+
+
+================================================================================
+第三部分：初始化数据库
+================================================================================
+
+------------------------------------------------------------------------
+3.1 创建数据库并导入表结构
+------------------------------------------------------------------------
+
+方式一：使用命令行（推荐）
+
+  (1) 打开命令提示符（Win+R 输入 cmd）
+  (2) 登录 MySQL：
+      mysql -u root -proot
+  (3) 执行初始化脚本（注意将路径改成你的实际路径，使用正斜杠 /）：
+      source D:/外卖小程序/backend/sql/init.sql;
+  (4) 验证数据库创建成功：
+      USE shike_takeout;
+      SHOW TABLES;
+      你应该能看到 15+ 张表。
+
+  (5) 还需要手动添加几个可能缺少的表和字段：
+
+      -- 商家表添加经纬度和配送范围字段
+      ALTER TABLE merchant ADD COLUMN latitude DECIMAL(10,6) DEFAULT 31.230416 AFTER address;
+      ALTER TABLE merchant ADD COLUMN longitude DECIMAL(10,6) DEFAULT 121.473701 AFTER latitude;
+      ALTER TABLE merchant ADD COLUMN delivery_range INT DEFAULT 5 COMMENT '配送范围(公里)' AFTER delivery_fee;
+
+      -- 菜品规格组表
+      CREATE TABLE IF NOT EXISTS dish_spec_group (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        dish_id BIGINT NOT NULL COMMENT '菜品ID',
+        group_name VARCHAR(64) NOT NULL COMMENT '规格组名',
+        required INT DEFAULT 1,
+        sort_order INT DEFAULT 0,
+        create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY idx_dish_id (dish_id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+      -- 菜品规格表
+      CREATE TABLE IF NOT EXISTS dish_spec (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        group_id BIGINT NOT NULL COMMENT '规格组ID',
+        dish_id BIGINT NOT NULL COMMENT '菜品ID',
+        name VARCHAR(64) NOT NULL COMMENT '规格名',
+        price_adjustment DECIMAL(10,2) DEFAULT 0 COMMENT '价格调整',
+        is_default INT DEFAULT 0,
+        sort_order INT DEFAULT 0,
+        create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY idx_group_id (group_id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+      -- 商家入驻申请表
+      CREATE TABLE IF NOT EXISTS merchant_apply (
+        id BIGINT NOT NULL AUTO_INCREMENT,
+        user_id BIGINT NOT NULL COMMENT '申请用户ID',
+        name VARCHAR(128) NOT NULL COMMENT '商家名称',
+        logo VARCHAR(512) DEFAULT NULL,
+        description VARCHAR(512) DEFAULT NULL,
+        address VARCHAR(256) DEFAULT NULL,
+        phone VARCHAR(20) DEFAULT NULL,
+        category_type VARCHAR(64) DEFAULT NULL,
+        business_hours VARCHAR(64) DEFAULT '08:00-22:00',
+        status INT DEFAULT 0 COMMENT '0待审核 1通过 2拒绝',
+        reject_reason VARCHAR(256) DEFAULT NULL,
+        merchant_account VARCHAR(64) DEFAULT NULL,
+        merchant_password VARCHAR(64) DEFAULT NULL,
+        merchant_id BIGINT DEFAULT NULL,
+        create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+        update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY idx_user_id (user_id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商家入驻申请表';
+
+  (6) 输入 exit 退出 MySQL。
+
+方式二：使用 Navicat 等可视化工具
+
+  (1) 打开 Navicat（或其他 MySQL 可视化工具）
+  (2) 新建连接：主机 localhost，端口 3306，用户名 root，密码 root
+  (3) 右键连接 -> "运行 SQL 文件" -> 选择 backend/sql/init.sql
+  (4) 再手动执行上述步骤(5)中的 SQL 语句
+
+------------------------------------------------------------------------
+3.2 导入示例数据（推荐）
+------------------------------------------------------------------------
+
+导入示例数据后，系统各页面才有数据展示（订单、评价、用户等）。
+
+  mysql -u root -proot --default-character-set=utf8mb4
+
+  在 MySQL 命令行中执行：
+  USE shike_takeout;
+  source D:/外卖小程序/backend/sql/sample_data.sql;
+
+  注意：
+  - 路径中不要有中文，如果项目路径有中文，先把 sample_data.sql 复制到
+    一个纯英文路径下再执行，例如：
+    复制到 C:\temp\sample_data.sql
+    然后执行 source C:/temp/sample_data.sql;
+
+
+================================================================================
+第四部分：启动后端服务
+================================================================================
+
+------------------------------------------------------------------------
+4.1 修改数据库连接配置（如需要）
+------------------------------------------------------------------------
+
+如果你的 MySQL 密码不是 root，需要修改配置文件：
+
+打开文件：backend/src/main/resources/application.yml
+
+找到以下内容：
+  datasource:
+    url: jdbc:mysql://localhost:3306/shike_takeout?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+
+将 username 和 password 改成你的 MySQL 账号密码。
+
+------------------------------------------------------------------------
+4.2 编译并启动后端
+------------------------------------------------------------------------
+
+  (1) 打开命令提示符（Win+R 输入 cmd）
+  (2) 进入后端项目目录：
+      cd D:\外卖小程序\backend
+      （改成你的实际路径）
+  (3) 执行 Maven 编译启动命令：
+      mvn spring-boot:run
+  (4) 首次运行会下载大量依赖包，可能需要 5-15 分钟，请耐心等待
+  (5) 当你看到以下信息时，说明后端启动成功：
+
+      Started KoalaTakeoutApplication in X.XXX seconds
+      Tomcat started on port(s): 8080
+
+  (6) 后端启动后不要关闭这个命令提示符窗口！
+
+验证后端是否正常运行：
+  打开浏览器，访问 http://localhost:8080/api/merchant/list
+  如果能看到 JSON 数据（商家列表），说明后端工作正常。
+
+常见问题：
+  Q: 提示"mvn 不是内部或外部命令"
+  A: Maven 环境变量未配置，参考 1.2 节重新配置
+
+  Q: 提示"端口 8080 被占用"
+  A: 打开命令提示符执行 netstat -ano | findstr "8080"
+     找到占用端口的 PID，然后 taskkill /PID 进程号 /F
+
+  Q: 提示数据库连接失败
+  A: 检查 MySQL 服务是否启动，检查用户名密码是否正确
+
+
+================================================================================
+第五部分：启动管理后台前端
+================================================================================
+
+------------------------------------------------------------------------
+5.1 安装前端依赖
+------------------------------------------------------------------------
+
+  (1) 打开一个新的命令提示符窗口（不要关闭后端的窗口）
+  (2) 进入管理后台目录：
+      cd D:\外卖小程序\admin
+  (3) 安装依赖：
+      npm install
+  (4) 首次安装可能需要 2-5 分钟
+
+  如果安装报错，可以尝试：
+      npm install --legacy-peer-deps
+
+------------------------------------------------------------------------
+5.2 启动前端开发服务器
+------------------------------------------------------------------------
+
+  (1) 在 admin 目录下执行：
+      npm run dev
+  (2) 看到以下信息说明启动成功：
+
+      VITE v4.x.x  ready in xxx ms
+      ➜  Local:   http://localhost:3000/
+
+  (3) 打开浏览器访问 http://localhost:3000
+
+------------------------------------------------------------------------
+5.3 登录管理后台
+------------------------------------------------------------------------
+
+系统有两种角色可以登录：
+
+  系统管理员：
+    账号：admin
+    密码：123456
+    可见菜单：工作台、商家审核、公告管理、系统配置、数据监控
+
+  商家管理员（以"美味小馆"为例）：
+    账号：merchant1
+    密码：123456
+    可见菜单：工作台、订单管理、菜品管理、类目管理、套餐管理、员工管理、运营设置
+
+  其他商家账号：merchant2、merchant3、merchant4，密码均为 123456
+
+
+================================================================================
+第六部分：启动微信小程序
+================================================================================
+
+------------------------------------------------------------------------
+6.1 导入小程序项目
+------------------------------------------------------------------------
+
+  (1) 打开微信开发者工具
+  (2) 点击"+"号或"导入项目"
+  (3) 项目目录：选择"外卖小程序/miniprogram"文件夹
+  (4) AppID：保持默认的测试号（wx0000000000000000）或点击"测试号"
+      如果你有自己的 AppID，可以填写自己的
+  (5) 点击"确定"导入
+
+------------------------------------------------------------------------
+6.2 配置小程序
+------------------------------------------------------------------------
+
+  (1) 在微信开发者工具中，点击右上角"详情"
+  (2) 选择"本地设置"选项卡
+  (3) 勾选以下选项：
+      ✅ 不校验合法域名、web-view（业务域名）、TLS 版本以及 HTTPS 证书
+      （这是因为开发环境使用的是 localhost，不是 https 域名）
+  (4) 确保"ES6 转 ES5"已勾选
+
+------------------------------------------------------------------------
+6.3 确认小程序后端地址
+------------------------------------------------------------------------
+
+  小程序默认连接 http://localhost:8080（本地后端）。
+  如果你的后端不在本机运行，需要修改：
+
+  打开文件：miniprogram/utils/request.js
+  第1行：const BASE_URL = 'http://localhost:8080'
+  将 localhost:8080 改为你的后端地址。
+
+------------------------------------------------------------------------
+6.4 编译运行
+------------------------------------------------------------------------
+
+  (1) 点击微信开发者工具顶部的"编译"按钮
+  (2) 小程序会在左侧模拟器中运行
+  (3) 你应该能看到首页，包含商家列表、轮播图等
+
+------------------------------------------------------------------------
+6.5 小程序功能使用说明
+------------------------------------------------------------------------
+
+  - 首页：浏览商家、搜索、定位、排序筛选
+  - 点击商家进入店铺：选菜、加入购物车、下单
+  - 订单页：查看所有订单、待支付/待接单/配送中/已完成/待评价
+  - 我的页：个人信息、收货地址管理、收藏、浏览历史、商家入驻申请等
+
+  小程序登录：
+  - 点击"我的"页面的登录按钮
+  - 开发环境下会模拟微信登录（使用 openid 自动注册/登录）
+
+
+================================================================================
+第七部分：各端口汇总
+================================================================================
+
+  后端 API 服务：    http://localhost:8080
+  管理后台前端：      http://localhost:3000
+  小程序：            在微信开发者工具中运行（连接 localhost:8080）
+
+  三个服务需要同时运行！顺序为：先启动后端 → 再启动管理后台 → 再编译小程序
+
+
+================================================================================
+第八部分：数据库账号信息汇总
+================================================================================
+
+  数据库信息：
+    主机：localhost
+    端口：3306
+    数据库名：shike_takeout
+    用户名：root
+    密码：root
+
+  管理员账号：
+    账号：admin
+    密码：123456（MD5: e10adc3949ba59abbe56e057f20f883e）
+
+  商家账号：
+    merchant1 / 123456  → 美味小馆
+    merchant2 / 123456  → 快乐炸鸡
+    merchant3 / 123456  → 清新茶语
+    merchant4 / 123456  → 轻享沙拉
+
+  小程序用户：
+    开发环境自动通过模拟 openid 登录，无需手动注册
+
+
+================================================================================
+第九部分：常见问题排查
+================================================================================
+
+Q1: 后端启动报"Cannot determine database"或数据库连接失败
+A1: (1) 确认 MySQL 服务已启动（Windows 服务中查找 MySQL）
+    (2) 确认数据库 shike_takeout 已创建（执行了 init.sql）
+    (3) 确认 application.yml 中的用户名密码正确
+
+Q2: 管理后台登录后一直转圈或提示 401
+A2: (1) 确认后端服务正在运行（http://localhost:8080 能访问）
+    (2) 清除浏览器缓存：F12 → Application → Local Storage → 清除所有数据
+    (3) 重新登录
+
+Q3: 小程序显示"网络连接失败"
+A3: (1) 确认后端服务正在运行
+    (2) 确认小程序详情中已勾选"不校验合法域名"
+    (3) 检查 miniprogram/utils/request.js 中的 BASE_URL 是否正确
+
+Q4: 小程序页面空白、没有数据
+A4: (1) 确认后端正在运行
+    (2) 确认已执行数据库初始化脚本（init.sql）
+    (3) 打开微信开发者工具的调试器（Console），查看具体报错
+
+Q5: npm install 报错
+A5: (1) 确认 Node.js 已正确安装（node -v 能显示版本）
+    (2) 尝试删除 node_modules 文件夹后重新安装：
+        rmdir /s /q node_modules
+        npm install
+    (3) 如果还是不行：npm install --legacy-peer-deps
+
+Q6: Maven 下载依赖非常慢
+A6: 配置阿里云镜像（参考 1.2 节），或者使用已下载好的本地仓库
+
+Q7: 端口被占用
+A7: 查找并结束占用端口的进程：
+    netstat -ano | findstr ":8080"    ← 后端端口
+    netstat -ano | findstr ":3000"    ← 前端端口
+    taskkill /PID 进程号 /F
+
+Q8: 管理后台菜单只显示部分
+A8: 不同角色看到的菜单不同。管理员（admin）能看到所有菜单，
+    商家账号只能看到与自己店铺相关的菜单。
+
+Q9: 商家入驻申请后看不到审批
+A9: 需要用管理员账号（admin）登录管理后台 → 商家审核 → 入驻申请 标签页
+
+
+================================================================================
+第十部分：生产环境部署（进阶）
+================================================================================
+
+如果需要部署到服务器上供外网访问：
+
+1. 后端打包：
+   cd backend
+   mvn clean package -DskipTests
+   生成的 jar 包在 backend/target/takeout-1.0.0.jar
+
+   启动命令：
+   java -jar takeout-1.0.0.jar
+
+2. 前端打包：
+   cd admin
+   npm run build
+   生成的静态文件在 admin/dist/ 目录
+   将 dist 目录内容部署到 Nginx
+
+3. Nginx 配置示例：
+   server {
+       listen 80;
+       server_name your-domain.com;
+
+       location / {
+           root /path/to/admin/dist;
+           try_files $uri $uri/ /index.html;
+       }
+
+       location /api/ {
+           proxy_pass http://localhost:8080;
+       }
+
+       location /uploads/ {
+           proxy_pass http://localhost:8080;
+       }
+
+       location /ws/ {
+           proxy_pass http://localhost:8080;
+           proxy_http_version 1.1;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection "upgrade";
+       }
+   }
+
+4. 小程序上线：
+   - 修改 miniprogram/utils/request.js 中 BASE_URL 为服务器地址
+   - 在微信公众平台配置服务器域名
+   - 使用微信开发者工具上传代码并提交审核
+
+
+================================================================================
+               
+================================================================================
